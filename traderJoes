@@ -1,0 +1,20 @@
+void OnTick(){
+   double lowerBand = iBands(_Symbol,_Period,40,2,0,PRICE_CLOSE,MODE_LOWER,1);
+   double upperBand = iBands(_Symbol,_Period,40,2,0,PRICE_CLOSE,MODE_UPPER,1);
+   
+   double previousLowerBand = iBands(_Symbol,_Period,40,2,0,PRICE_CLOSE,MODE_LOWER,2);
+   double previousUpperBand = iBands(_Symbol,_Period,40,2,0,PRICE_CLOSE,MODE_UPPER,2); 
+   
+   double RSIValue = iRSI(_Symbol,_Period,14,PRICE_CLOSE,0);
+         
+         
+      if(RSIValue > 81 && (Close[1] > upperBand) && (Close[2] < upperBand) && (Close[3] < upperBand)&& (Close[4] > upperBand)){
+         OrderSend (_Symbol,OP_SELL,0.05,Bid,3,Bid+160*_Point,Bid-170*_Point,NULL,0,0,Red);
+         //OrderSend (_Symbol,OP_BUY,0.01,Ask,3,Ask-150*_Point,Ask+150*_Point,NULL,0,0,Green);
+      }
+      
+      if(RSIValue < 20 && (Close[1] < lowerBand) && (Close[2] > lowerBand) && (Close[3] > lowerBand)&& (Close[4] < lowerBand)) {
+         OrderSend (_Symbol,OP_BUY,0.05,Ask,3,Ask-160*_Point,Ask+170*_Point,NULL,0,0,Green);
+         //OrderSend (_Symbol,OP_SELL,0.01,Bid,3,Bid+150*_Point,Bid-150*_Point,NULL,0,0,Red);
+      }          
+}
